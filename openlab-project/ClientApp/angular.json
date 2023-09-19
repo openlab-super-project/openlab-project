@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "openlab_project"
+  "defaultProject": "openlab_project",
+  "cli": {
+    "analytics": "6ad64664-9295-46e4-aa37-bbb93b315fb9"
+  }
 }
