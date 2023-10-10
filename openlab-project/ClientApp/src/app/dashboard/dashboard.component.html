@@ -1,6 +1,7 @@
-<p>GuildName: <span></span></p>
-<p>XP: <span></span></p>
-<div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar" style="width: 25%">25%</div>
-</div>
+<!--<form [formGroup]="myForm">
+  <input type="text" formControlName="myModel" />
+</form>-->
+<p>GuildName: {{ myForm?.get('myModel1')?.value }}</p>
+<p>XP: {{ myForm?.get('myModel')?.value }}</p>
+<mat-progress-bar mode="determinate" [value]="myForm?.get('myModel')?.value"></mat-progress-bar>
 
