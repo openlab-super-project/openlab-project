@@ -10,8 +10,20 @@ namespace openlab_project.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "Guild",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "XP",
+                table: "AspNetUsers");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.AddColumn<string>(
-                name: "GuildName",
+                name: "Guild",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -22,18 +34,6 @@ namespace openlab_project.Data.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "GuildName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "XP",
-                table: "AspNetUsers");
         }
     }
 }

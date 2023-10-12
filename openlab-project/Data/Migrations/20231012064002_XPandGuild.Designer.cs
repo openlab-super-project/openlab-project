@@ -12,7 +12,7 @@ using openlab_project.Data;
 namespace openlab_project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231010074142_XPandGuild")]
+    [Migration("20231012064002_XPandGuild")]
     partial class XPandGuild
     {
         /// <inheritdoc />
@@ -322,9 +322,6 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("GuildName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -357,9 +354,6 @@ namespace openlab_project.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("XP")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

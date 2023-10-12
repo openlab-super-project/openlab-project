@@ -13,5 +13,7 @@ namespace openlab_project.Data
         {
 
         }
+
+        DbSet<Guild> Guilds { get; set; }
     }
 }
