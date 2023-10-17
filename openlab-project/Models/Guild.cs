@@ -6,7 +6,7 @@ namespace openlab_project.Models
     {
         [Key]
         public int Id { get; set; }
-        public string? Guildname { get; set; }
+        public string? GuildName { get; set; }
         public int XP { get; set; }
     }
 }

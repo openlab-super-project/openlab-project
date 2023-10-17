@@ -14,6 +14,6 @@ namespace openlab_project.Data
 
         }
 
-        DbSet<Guild> Guilds { get; set; }
+        DbSet<Guild> Guilds { get; set; } = default;
     }
 }
