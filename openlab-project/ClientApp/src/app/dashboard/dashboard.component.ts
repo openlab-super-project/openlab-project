@@ -19,7 +19,7 @@ export class DashboardComponent {
   }
 }
 interface UserInfo {
-  gn: string;
+  guildName: string;
   xp: number;
 }
 
