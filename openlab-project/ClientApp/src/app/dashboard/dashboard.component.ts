@@ -1,6 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { from } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -10,17 +8,18 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class DashboardComponent {
-  dashboard: UserInfo;
+  dashboard: UserInfo = { guildName: '', xp: 0 }; // Initialize with default values
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<UserInfo>(baseUrl + 'user').subscribe(result => {
-      this.dashboard = result;
-    }, error => console.error(error));
+    http.get<UserInfo>(baseUrl + 'user').subscribe(
+      (result) => {
+        this.dashboard = result;
+      },
+      (error) => console.error(error)
+    );
   }
 }
 interface UserInfo {
   guildName: string;
   xp: number;
 }
-
-

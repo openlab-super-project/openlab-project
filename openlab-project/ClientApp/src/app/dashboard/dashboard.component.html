@@ -1,7 +1,73 @@
-<!--<form [formGroup]="myForm">
-  <input type="text" formControlName="myModel" />
-</form>-->
-<p>GuildName: <span>{{dashboard.guildName}}</span></p>
-<p>XP: {{dashboard.xp }}</p>
-<!--<mat-progress-bar mode="determinate" [value]="myForm?.get('myModel')?.value"></mat-progress-bar>-->
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
+    .progressbar-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .progressbar {
+      width: calc(100% - 40px); /* Adjust the width */
+      height: 5px;
+    }
+
+    .box {
+      border: 2px solid white;
+      width: 50%; /* Adjust the width to make the box wider */
+      max-width: 800px; /* Set a maximum width for the box */
+      height: auto;
+      margin: 0 auto;
+      border-radius: 10px; /* Add border-radius for rounded corners */
+    }
+
+      .box p,
+      progress {
+        margin: 10px;
+        padding: 10px;
+      }
+
+    .box-content {
+      margin: 0px;
+    }
+
+    .content {
+      margin: 0;
+      padding: 0;
+    }
+
+    @media (max-width: 768px) {
+      .box {
+        width: 80%;
+      }
+
+      .box-content {
+        text-align: center;
+      }
+
+      .progressbar {
+        width: calc(100% - 20px); /* Adjust the width */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="box">
+      <div class="box-content">
+        <p>GuildName: <span>{{dashboard.guildName}}</span></p>
+        <p>XP: {{dashboard.xp }}</p>
+        <div class="progressbar-container">
+          <progress class="progressbar" value="{{dashboard.xp}}" max="100"></progress>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
