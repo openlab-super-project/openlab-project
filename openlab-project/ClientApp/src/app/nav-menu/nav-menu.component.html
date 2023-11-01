@@ -1,8 +1,8 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black border-bottom box-shadow mb-3 text-light" style="background-color: black;"
   >
-    <div class="container">
+    <div class="container" style="background-color: black;color: white;">
       <a class="navbar-brand" [routerLink]="['/']">openlab_project</a>
       <button
         class="navbar-toggler"
@@ -20,18 +20,18 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
+          <li class="nav-item" 
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-white" [routerLink]="['/']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
+            <a class="nav-link text-white" [routerLink]="['/counter']">Counter</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
+            <a class="nav-link text-white" [routerLink]="['/fetch-data']">Fetch data</a>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/dashboard']">Dashboard</a>
+            <a class="nav-link text-white" [routerLink]="['/dashboard']">Dashboard</a>
           </li>
         </ul>
         <app-login-menu></app-login-menu>

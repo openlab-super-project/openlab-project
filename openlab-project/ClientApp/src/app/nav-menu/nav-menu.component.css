@@ -2,7 +2,11 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: white;
   
+}
+.nav-item a{
+    color: white;
 }
 
 html {
@@ -17,4 +21,3 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem black;
 }
-
