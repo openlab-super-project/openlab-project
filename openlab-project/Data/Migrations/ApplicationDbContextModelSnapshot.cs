@@ -322,6 +322,12 @@ namespace openlab_project.Data.Migrations
                     b.Property<string>("GN")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuildsId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -360,6 +366,8 @@ namespace openlab_project.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GuildId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -373,19 +381,22 @@ namespace openlab_project.Data.Migrations
 
             modelBuilder.Entity("openlab_project.Models.Guild", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GuildId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GuildId"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GuildName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("XP")
+                    b.Property<int>("MaxMembersCount")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("GuildId");
 
                     b.ToTable("Guilds");
                 });
@@ -439,6 +450,20 @@ namespace openlab_project.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("openlab_project.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("openlab_project.Models.Guild", "Guild")
+                        .WithMany("users")
+                        .HasForeignKey("GuildId");
+
+                    b.Navigation("Guild");
+                });
+
+            modelBuilder.Entity("openlab_project.Models.Guild", b =>
+                {
+                    b.Navigation("users");
                 });
 #pragma warning restore 612, 618
         }

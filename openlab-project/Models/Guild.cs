@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace openlab_project.Models
 {
     public class Guild
     {
         [Key]
-        public int Id { get; set; }
+        public int GuildId { get; set; }
         public string? GuildName { get; set; }
-        public int XP { get; set; }
+        public int MaxMembersCount { get; set; }
+        public string? Description { get; set; }
+
+        public ICollection<ApplicationUser>? users { get; }
     }
 }
