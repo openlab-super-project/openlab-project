@@ -5,15 +5,15 @@
 namespace openlab_project.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class GuildTable : Migration
+    public partial class GuildAndUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "GN",
+            migrationBuilder.AddColumn<int>(
+                name: "GuildInfoGuildId",
                 table: "AspNetUsers",
-                type: "nvarchar(max)",
+                type: "int",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
@@ -27,25 +27,46 @@ namespace openlab_project.Data.Migrations
                 name: "Guilds",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    GuildId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GuildName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    XP = table.Column<int>(type: "int", nullable: false)
+                    MaxMembersCount = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Guilds", x => x.Id);
+                    table.PrimaryKey("PK_Guilds", x => x.GuildId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_GuildInfoGuildId",
+                table: "AspNetUsers",
+                column: "GuildInfoGuildId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_Guilds_GuildInfoGuildId",
+                table: "AspNetUsers",
+                column: "GuildInfoGuildId",
+                principalTable: "Guilds",
+                principalColumn: "GuildId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_Guilds_GuildInfoGuildId",
+                table: "AspNetUsers");
+
             migrationBuilder.DropTable(
                 name: "Guilds");
 
+            migrationBuilder.DropIndex(
+                name: "IX_AspNetUsers_GuildInfoGuildId",
+                table: "AspNetUsers");
+
             migrationBuilder.DropColumn(
-                name: "GN",
+                name: "GuildInfoGuildId",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(

@@ -8,18 +8,23 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class DashboardComponent {
-  dashboard: UserInfo = { guildName: '', xp: 0 }; // Initialize with default values
+  guild: string = "nothing"
+  xp: number = 0;
+
+  public UserData: UserDTO;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<UserInfo>(baseUrl + 'user').subscribe(
+    http.get<UserDTO>(baseUrl + 'user').subscribe(
       (result) => {
-        this.dashboard = result;
+        this.UserData = result;
+        this.xp = result.xp;
+        this.guild = result.guild;
       },
       (error) => console.error(error)
     );
   }
 }
-interface UserInfo {
-  guildName: string;
+interface UserDTO {
   xp: number;
+  guild: string;
 }

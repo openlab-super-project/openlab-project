@@ -12,8 +12,8 @@ using openlab_project.Data;
 namespace openlab_project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231101103508_GuildTable")]
-    partial class GuildTable
+    [Migration("20231101180752_GuildAndUSer2")]
+    partial class GuildAndUSer2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -322,8 +322,8 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("GN")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("GuildInfoGuildId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -363,6 +363,8 @@ namespace openlab_project.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GuildInfoGuildId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -374,23 +376,29 @@ namespace openlab_project.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("openlab_project.Models.Guild", b =>
+            modelBuilder.Entity("openlab_project.Models.GuildInfo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GuildId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GuildId"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GuildName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("XP")
+                    b.Property<int>("MaxMembersCount")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("MembersCount")
+                        .HasColumnType("int");
 
-                    b.ToTable("Guilds");
+                    b.HasKey("GuildId");
+
+                    b.ToTable("Guild");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -442,6 +450,20 @@ namespace openlab_project.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("openlab_project.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("openlab_project.Models.GuildInfo", "GuildInfo")
+                        .WithMany("Members")
+                        .HasForeignKey("GuildInfoGuildId");
+
+                    b.Navigation("GuildInfo");
+                });
+
+            modelBuilder.Entity("openlab_project.Models.GuildInfo", b =>
+                {
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

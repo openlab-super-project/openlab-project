@@ -6,38 +6,26 @@ using System.Security.Claims;
 
 namespace openlab_project.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public class UserInfo
+        
+        public UserController(ApplicationDbContext context)
         {
-            public int XP { get; set; }
-            public string ?
-                GuildName { get; set; }
-        }
-        public UserController(ILogger<UserController> logger, ApplicationDbContext context)
-        {
-            _logger = logger;
             _context = context;
         }
 
         [HttpGet]
-        public ActionResult<UserInfo> Get()
+        public ActionResult<UserDTO> Get()
         {
             var currentUser = GetCurrentUser();
-
-
-
-            var info = new UserInfo()
+            var info = new UserDTO()
             {
                 XP = currentUser.xp,
-                GuildName = currentUser.GN,
-            
+                Guild = currentUser.GuildInfo?.GuildName,
             };
             return info;
             

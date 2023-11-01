@@ -12,8 +12,8 @@ using openlab_project.Data;
 namespace openlab_project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231101105421_GuildandUser")]
-    partial class GuildandUser
+    [Migration("20231101164639_GuildAndUser1")]
+    partial class GuildAndUser1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -322,13 +322,7 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("GN")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GuildId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GuildsId")
+                    b.Property<int?>("GuildInfoGuildId")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -369,7 +363,7 @@ namespace openlab_project.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GuildId");
+                    b.HasIndex("GuildInfoGuildId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -382,7 +376,7 @@ namespace openlab_project.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("openlab_project.Models.Guild", b =>
+            modelBuilder.Entity("openlab_project.Models.GuildInfo", b =>
                 {
                     b.Property<int>("GuildId")
                         .ValueGeneratedOnAdd()
@@ -399,9 +393,12 @@ namespace openlab_project.Data.Migrations
                     b.Property<int>("MaxMembersCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("MemberCount")
+                        .HasColumnType("int");
+
                     b.HasKey("GuildId");
 
-                    b.ToTable("Guilds");
+                    b.ToTable("Guild");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -457,16 +454,16 @@ namespace openlab_project.Data.Migrations
 
             modelBuilder.Entity("openlab_project.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("openlab_project.Models.Guild", "Guild")
-                        .WithMany("users")
-                        .HasForeignKey("GuildId");
+                    b.HasOne("openlab_project.Models.GuildInfo", "GuildInfo")
+                        .WithMany("Members")
+                        .HasForeignKey("GuildInfoGuildId");
 
-                    b.Navigation("Guild");
+                    b.Navigation("GuildInfo");
                 });
 
-            modelBuilder.Entity("openlab_project.Models.Guild", b =>
+            modelBuilder.Entity("openlab_project.Models.GuildInfo", b =>
                 {
-                    b.Navigation("users");
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

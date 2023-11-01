@@ -14,6 +14,7 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { GuildComponent } from './guilds/guilds.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,7 +36,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-      { path: 'dashboard', component: DashboardComponent}
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'guilds', component: GuildComponent }
+
     ])
   ],
   providers: [

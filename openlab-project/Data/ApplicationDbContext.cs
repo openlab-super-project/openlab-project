@@ -13,7 +13,7 @@ namespace openlab_project.Data
         {
 
         }
-
-        DbSet<Guild> Guilds { get; set; } = default;
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<GuildInfo> Guild { get; set; } = default;
     }
 }
