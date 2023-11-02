@@ -16,10 +16,10 @@ export class GuildComponent {
   MaxMembersCount: number = 0;
   MembersCount: number = 0;
 
-  public GuildData: GuildInformation[] = [];
+  public GuildData: GuildInfo[] = [];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<GuildInformation[]>(baseUrl + 'Guild').subscribe(result => {
+    http.get<GuildInfo[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
 
     }, error => console.error(error));
@@ -30,7 +30,7 @@ export class GuildComponent {
   }
 }
 
-interface GuildInformation {
+interface GuildInfo {
   guildName: string;
   GuildId: number;
   Description: string;
