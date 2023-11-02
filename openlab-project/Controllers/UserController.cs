@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using openlab_project.Data;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
@@ -35,6 +36,7 @@ namespace openlab_project.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Models.ApplicationUser? user = _context.Users
+            .Include(user=> user.GuildInfo)
             .SingleOrDefault(user => user.Id == userId);
 
             return user;
