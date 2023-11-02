@@ -11,9 +11,9 @@ import { HttpClient } from '@angular/common/http';
 
 export class GuildComponent {
 
-  Name: string = "no data";
+  guildName: string = "no data";
   Description: string = "no data";
-  GuildMaxMembers: number = 0;
+  MaxMembersCount: number = 0;
   MembersCount: number = 0;
 
   public GuildData: GuildInformation[] = [];
@@ -31,10 +31,10 @@ export class GuildComponent {
 }
 
 interface GuildInformation {
-  Name: string;
-  Id: number;
+  guildName: string;
+  GuildId: number;
   Description: string;
-  GuildMaxMembers: number;
+  MaxMembersCount: number;
   MembersCount: number;
 
 }
