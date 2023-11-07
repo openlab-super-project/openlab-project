@@ -1,6 +1,6 @@
-
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, NgModule, Inject } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-guild',
@@ -23,19 +23,20 @@ export class GuildComponent {
       this.GuildData = result;
 
     }, error => console.error(error));
-
-
-
-
   }
 }
 
 interface GuildInfo {
   guildName: string;
   GuildId: number;
-  Description: string;
-  MaxMembersCount: number;
-  MembersCount: number;
-
+  description: string;
+  maxMembersCount: number;
+  membersCount: number;
 }
+@NgModule({
+  declarations: [GuildComponent], 
+  imports: [BrowserModule, HttpClientModule],
+  bootstrap: [GuildComponent]
+})
 
+export class AppModule{ }
