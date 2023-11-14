@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using openlab_project;
 using openlab_project.Data;
 using openlab_project.Models;
 
@@ -17,11 +18,11 @@ namespace OpenLabProject1.Controllers
             _context = context;
         }
         [HttpGet]
-        public IEnumerable<GuildInfo> GetGuildInformation()
+        public IEnumerable<GuildDTO> GetGuildInformation()
         {
             IEnumerable<GuildInfo> dbGuilds = _context.Guild;
 
-            return dbGuilds.Select(dbGuilds => new GuildInfo
+            return dbGuilds.Select(dbGuilds => new GuildDTO
             {
                 GuildId = dbGuilds.GuildId,
                 GuildName = dbGuilds.GuildName,
