@@ -1,6 +1,8 @@
 import { Component, NgModule, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { AppRoutingModule } from '../app-routing.module'
 
 @Component({
   selector: 'app-guild',
@@ -18,17 +20,21 @@ export class GuildComponent {
 
   public GuildData: GuildDTO[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
 
     }, error => console.error(error));
   }
+  public goToGuildD() {
+    this.router.navigate(['/guild-description'])
+  }
 }
+
 
 interface GuildDTO {
   guildName: string;
-  GuildId: number;
+  guildId: number;
   description: string;
   maxMembersCount: number;
   membersCount: number;

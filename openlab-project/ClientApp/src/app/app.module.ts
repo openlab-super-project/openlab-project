@@ -15,6 +15,8 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GuildComponent } from './guilds/guilds.component';
+import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
+import {AppRoutingModule } from '../app/app-routing.module'
 
 @NgModule({
   declarations: [
@@ -23,7 +25,7 @@ import { GuildComponent } from './guilds/guilds.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    DashboardComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,6 +33,7 @@ import { GuildComponent } from './guilds/guilds.component';
     ReactiveFormsModule,
     MatProgressBarModule,
     FormsModule,
+    AppRoutingModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
