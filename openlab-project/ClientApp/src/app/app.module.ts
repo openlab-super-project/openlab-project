@@ -32,6 +32,7 @@ import {AppRoutingModule } from '../app/app-routing.module'
     HttpClientModule,
     ReactiveFormsModule,
     MatProgressBarModule,
+    RouterModule,
     FormsModule,
     AppRoutingModule,
     ApiAuthorizationModule,

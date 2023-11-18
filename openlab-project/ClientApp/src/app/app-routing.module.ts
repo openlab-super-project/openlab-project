@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router'
 import { GuildescriptionComponent } from '../app/guilddescription/guilddescription.component'
 import { GuildComponent } from '../app/guilds/guilds.component'
 const routes: Routes = [
-  { path: 'guild', component: GuildComponent },
-  { path: 'guild-description', component: GuildescriptionComponent },
+  //{ path: 'guilds', component: GuildComponent },
+  { path: 'guild/:guildId', component: GuildescriptionComponent },
   { path: '', redirectTo: '/guild', pathMatch: 'full'}
 ]
 @NgModule({

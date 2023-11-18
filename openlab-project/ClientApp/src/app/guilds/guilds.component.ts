@@ -26,8 +26,8 @@ export class GuildComponent {
 
     }, error => console.error(error));
   }
-  public goToGuildD() {
-    this.router.navigate(['/guild-description'])
+  public goToGuildD(guildId: number) {
+    this.router.navigate(['guild', guildId]);
   }
 }
 
