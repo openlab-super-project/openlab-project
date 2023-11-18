@@ -11,7 +11,7 @@
     <div [attr.id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'#heading' + i" data-bs-parent="#accordionExample" style="background-color: black; border: 1px solid white; color: white;">
       <div class="accordion-body">
         <p>{{guilds.description}}</p>
-        <button (click)="goToGuildD()">Details</button>
+        <button [routerLink]="['/guild', guilds.guildId]">Details</button>
       </div>
     </div>
   </div>

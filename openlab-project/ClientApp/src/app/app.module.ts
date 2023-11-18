@@ -38,6 +38,7 @@ import {AppRoutingModule } from '../app/app-routing.module'
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
+      { path: 'home', component: HomeComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'guilds', component: GuildComponent }
