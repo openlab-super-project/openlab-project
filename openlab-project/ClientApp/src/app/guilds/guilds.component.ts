@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module'
+import { GuildInfo, SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-guild',
@@ -20,18 +21,19 @@ export class GuildComponent {
 
   public GuildData: GuildDTO[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router, private Http: HttpClient,
+    private SharedService: SharedService) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
 
     }, error => console.error(error));
   }
-  public goToGuildD(guildId: number) {
-    this.router.navigate(['guild', guildId]);
+  public goToGuildD(guild: GuildDTO) {
+    this.router.navigate(['guild', guild.guildId]);
+    const guildInfo: GuildInfo = { guildName: guild.guildName, description: guild.description }
+    this.SharedService.changeGuildInfo(guildInfo);
   }
 }
-
-
 interface GuildDTO {
   guildName: string;
   guildId: number;
