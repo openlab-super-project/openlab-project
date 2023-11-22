@@ -25,16 +25,29 @@ export class GuildComponent {
     private SharedService: SharedService) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
-
+      
     }, error => console.error(error));
   }
-  public goToGuildD(guild: GuildDTO) {
-    this.router.navigate(['guild', guild.guildId]);
-    const guildInfo: GuildInfo = { guildName: guild.guildName, description: guild.description }
+  selectGuild(guild: GuildDTO) {
+    const targetGuildId = guild.guildId;
+
+    const guildInfo: GuildInfo = {
+      guildName: guild.guildName,
+      description: guild.description,
+      memberNames: guild.memberNames
+    };
+
     this.SharedService.changeGuildInfo(guildInfo);
+    this.SharedService.changeGuildId(targetGuildId);
+    this.SharedService.changeGuildMemberNames(guild.memberNames);
+    this.router.navigate(['guild', targetGuildId]);
+    this.SharedService.changeGuildInfo(guildInfo);
+    this.SharedService.changeGuildId(guild.guildId);
   }
+
 }
 interface GuildDTO {
+  memberNames: any;
   guildName: string;
   guildId: number;
   description: string;

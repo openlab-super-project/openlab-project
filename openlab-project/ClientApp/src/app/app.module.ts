@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GuildComponent } from './guilds/guilds.component';
 import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
 import {AppRoutingModule } from '../app/app-routing.module'
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {AppRoutingModule } from '../app/app-routing.module'
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    DashboardComponent
+    DashboardComponent,
+    GuildescriptionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,6 +37,7 @@ import {AppRoutingModule } from '../app/app-routing.module'
     RouterModule,
     FormsModule,
     AppRoutingModule,
+    CommonModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService, GuildInfo } from '../shared.service';
 
+
 @Component({
   selector: 'app-guilddescription',
   templateUrl: './guilddescription.component.html',
@@ -9,7 +10,11 @@ import { SharedService, GuildInfo } from '../shared.service';
 })
 export class GuildescriptionComponent {
   guildId: number;
-  guildInfo: GuildInfo = { guildName: '', description: '' };
+  guildInfo: GuildInfo = {
+      guildName: '', description: '',
+      memberNames: []
+  };
+  memberNames: string[] = [];
 
 
   constructor(
@@ -18,11 +23,30 @@ export class GuildescriptionComponent {
   ) { }
 
   ngOnInit() {
-    this.guildId = +this.route.snapshot.params['guildId'];
+    this.sharedService.currentGuildId.subscribe(
+      (guildId) => (this.guildId = guildId)
+    );
 
     this.sharedService.currentGuildInfo.subscribe(
       (guildInfo) => (this.guildInfo = guildInfo)
     );
+
+    this.sharedService.currentGuildMemberNames.subscribe(
+      (memberNames) => {
+        this.memberNames = memberNames;
+      }
+    );
+    this.sharedService.currentGuildId.subscribe(
+      (guildId) => {
+        this.guildId = guildId;
+        this.sharedService.currentGuildMemberNames.subscribe(
+          (memberNames) => {
+            this.memberNames = memberNames;
+          }
+        );
+      }
+    );
+
     
   }
 }

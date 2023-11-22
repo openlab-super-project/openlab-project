@@ -1,2 +1,7 @@
+<h2>GuildID: {{ guildId }}</h2>
 <h2>Guild Name: {{ guildInfo.guildName }}</h2>
 <p>Description: {{ guildInfo.description }}</p>
+<h3>Members:</h3>
+<ul>
+  <li *ngFor="let memberName of memberNames">{{ memberName }}</li>
+</ul>
