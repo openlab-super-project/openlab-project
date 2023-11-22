@@ -1,7 +1,11 @@
-<h2>GuildID: {{ guildId }}</h2>
-<h2>Guild Name: {{ guildInfo.guildName }}</h2>
-<p>Description: {{ guildInfo.description }}</p>
-<h3>Members:</h3>
-<ul>
-  <li *ngFor="let memberName of memberNames">{{ memberName }}</li>
-</ul>
+<div>
+  <h2 class="guild-info" style="margin: 10px;">Guild Name: {{ guildInfo.guildName }} ({{ guildId }})</h2>
+  <p class="guild-info" style="margin: 10px;">Description: {{ guildInfo.description }}</p>
+
+  <h3 class="guild-info"><b>Members of {{guildInfo.guildName}}:</b></h3>
+  <ul class="member-list">
+    <li *ngFor="let memberName of memberNames">{{ memberName }}</li>
+  </ul>
+
+  <button (click)="navigateBack()">Back</button>
+</div>

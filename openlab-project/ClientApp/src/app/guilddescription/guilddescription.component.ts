@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService, GuildInfo } from '../shared.service';
 
 
@@ -18,7 +18,7 @@ export class GuildescriptionComponent {
 
 
   constructor(
-    private route: ActivatedRoute,
+    private route: Router,
     private sharedService: SharedService
   ) { }
 
@@ -46,7 +46,8 @@ export class GuildescriptionComponent {
         );
       }
     );
-
-    
+  }
+  public navigateBack() {
+    this.route.navigate(['/guild']);
   }
 }

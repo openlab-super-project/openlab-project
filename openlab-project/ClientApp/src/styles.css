@@ -24,4 +24,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 main{
     width: 100%;
 }
+button {
+  background-color: #73e600;
+  color: white;
+  border: 2px solid white;
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+  button:hover {
+    background-color: #59b300;
+  }
 
