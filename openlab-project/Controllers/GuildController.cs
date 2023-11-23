@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using openlab_project;
 using openlab_project.Data;
 using openlab_project.Models;
+using System.Security.Claims;
 
 namespace OpenLabProject1.Controllers
 {
@@ -44,6 +45,41 @@ namespace OpenLabProject1.Controllers
         {
             IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
             return users.Where(u => u.GuildInfo.GuildId == guildId).Select(u => u.UserName).ToList();
+        }
+        [HttpPost("join")]
+        public IActionResult JoinGuild([FromBody] JoinGuildRequest request)
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
+
+                var guild = _context.Guild.FirstOrDefault(g => g.GuildId == request.GuildId);
+
+                if (user == null || guild == null)
+                {
+                    return NotFound(new { message = "User or guild not found." });
+                }
+
+                if (guild.Members.Count >= guild.MaxMembersCount)
+                {
+                    return BadRequest(new { message = "Guild is already full." });
+                }
+
+                user.GuildInfo = guild;
+                _context.SaveChanges();
+
+                return Ok(new { message = "Successfully joined guild." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error." });
+            }
+        }
+
+        public class JoinGuildRequest
+        {
+            public int GuildId { get; set; }
         }
 
     }
