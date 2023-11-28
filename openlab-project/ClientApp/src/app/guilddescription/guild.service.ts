@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GuildService {
-  private apiUrl = 'https://localhost:44442/';
+  private apiUrl = '';
 
   constructor(private http: HttpClient) { }
 
-  updateGuildId(guildid: number, newGuildId: string): Observable<any> {
-    const url = `${this.apiUrl}/update_guild/${guildid}`;
-    return this.http.post(url, { new_guild_id: newGuildId });
+  updateGuildId(id: number, ): Observable<any> {
+    const url = `${this.apiUrl}/updateGuildId/${id}`;
+    return this.http.put(url, { guildid: });
   }
 }
+

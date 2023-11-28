@@ -4,6 +4,7 @@ import { SharedService, GuildInfo } from '../shared.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
+
 @Component({
   selector: 'app-guilddescription',
   templateUrl: './guilddescription.component.html',
@@ -16,22 +17,34 @@ export class GuildescriptionComponent {
       memberNames: []
   };
   memberNames: string[] = [];
-  http: HttpClient;
-  @Inject('BASE_URL') baseUrl: string;
+
 
 
   constructor(
     private route: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string
   ) { }
 
   joinGuild(guildId: number) {
-    this.http.post(this.baseUrl + 'guild/join', { guildId }).subscribe(result => {
+    this.http.post(this.baseUrl + 'guild/join', { guildId: guildId }).subscribe(result => {
       console.log('Joined guild successfully', guildId);
+      this.refreshGuildData();
     }, error => {
       console.error('Error joining guild', error);
     });
   }
+
+  refreshGuildData() {
+    this.http.get<GuildInfo>(this.baseUrl + 'guild/' + this.guildId).subscribe(result => {
+      this.guildInfo = result;
+      console.log('Guild information refreshed', result);
+    }, error => {
+      console.error('Error refreshing guild information', error);
+    });
+  }
+
   ngOnInit() {
     this.sharedService.currentGuildId.subscribe(
       (guildId) => (this.guildId = guildId)

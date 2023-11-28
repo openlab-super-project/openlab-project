@@ -28,6 +28,7 @@ export class SharedService {
   changeGuildMemberNames(memberNames: string[]) {
     this.memberNamesSource.next(memberNames);
   }
+
 }
 export interface GuildInfo {
   guildName: string;
