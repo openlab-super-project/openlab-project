@@ -43,11 +43,21 @@ else
 }
  void ConfigureServices(IServiceCollection services)
 {
-    // Configure services here
+    services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAllOrigins",
+            builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+    });
 }
 
  void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
+    app.UseCors("AllowAllOrigins");
     if (env.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();

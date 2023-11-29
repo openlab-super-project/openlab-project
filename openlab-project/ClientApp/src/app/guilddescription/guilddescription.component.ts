@@ -2,6 +2,7 @@ import { Component,Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService, GuildInfo } from '../shared.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { GuildService } from './guild.service';
 
 
 
@@ -24,6 +25,7 @@ export class GuildescriptionComponent {
     private route: Router,
     private sharedService: SharedService,
     private http: HttpClient,
+    private guildService: GuildService,
     @Inject('BASE_URL') private baseUrl: string
   ) { }
 
@@ -34,6 +36,16 @@ export class GuildescriptionComponent {
     }, error => {
       console.error('Error joining guild', error);
     });
+  }
+  leaveGuild() {
+    this.guildService.leaveGuild().subscribe(
+      result => {
+        console.log('Left the guild successfully');
+      },
+      error => {
+        console.error('Error leaving the guild', error);
+      }
+    );
   }
 
   refreshGuildData() {

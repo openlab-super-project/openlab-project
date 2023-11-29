@@ -46,9 +46,10 @@ namespace OpenLabProject1.Controllers
             IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
             return users.Where(u => u.GuildInfo.GuildId == guildId).Select(u => u.UserName).ToList();
         }
-        [HttpPost("join")]
-        public IActionResult JoinGuild(int guildId)
+        [HttpPost("join/")]
+        public IActionResult JoinGuild([FromBody] GuildJoinRequest request)
         {
+            int guildId = request.GuildId;
             try
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -56,7 +57,12 @@ namespace OpenLabProject1.Controllers
 
                 var guild = _context.Guild.FirstOrDefault(g => g.GuildId == guildId);
 
-                /*if (user == null || guild == null)
+                if (user != null && user.GuildInfo != null)
+                {
+                    return BadRequest(new { message = "You are already a member of a guild." });
+                }
+
+                if (user == null || guild == null)
                 {
                     return NotFound(new { message = "User or guild not found." });
                 }
@@ -64,15 +70,61 @@ namespace OpenLabProject1.Controllers
                 if (guild.Members.Count >= guild.MaxMembersCount)
                 {
                     return BadRequest(new { message = "Guild is already full." });
-                }*/
+                }
 
                 user.GuildInfo = guild;
                 _context.SaveChanges();
+
+                UpdateUserGuildId(userId, guildId);
+
+                Console.WriteLine($"Joining guild with ID: {request.GuildId}");
                 return Ok(new { message = "Successfully joined guild." });
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Exception: {ex.Message}");
                 return StatusCode(500, new { message = "Internal server error." });
+            }
+        }
+        public class GuildJoinRequest
+        {
+            public int GuildId { get; set; }
+        }
+        [HttpPost("leave/")]
+        public IActionResult LeaveGuild()
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
+
+                if (user != null && user.GuildInfo != null)
+                {
+                    user.GuildInfo = null;
+                    _context.SaveChanges();
+
+                    return Ok(new { message = "Successfully left the guild." });
+                }
+                else
+                {
+                    return BadRequest(new { message = "You are not a member of any guild." });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, new { message = "Internal server error." });
+            }
+        }
+
+        private void UpdateUserGuildId(string userId, int guildId)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
+
+            if (user != null)
+            {
+                user.GuildInfo = new GuildInfo { GuildId = guildId };
+                _context.SaveChanges();
             }
         }
 
