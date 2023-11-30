@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -6,17 +6,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GuildService {
-  private apiUrl = 'https://localhost:44442/api/guild';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+
+  // getGuildDetail() vrati guild info
 
   joinGuild(guildId: number): Observable<any> {
-    const url = `${this.apiUrl}/join`;
+    const url = `${this.baseUrl}/join`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, { guildId: guildId }, { headers });
   }
   leaveGuild(guildId: number): Observable<any> {
-    const url = `${this.apiUrl}/leave/${guildId}`;
+    const url = `${this.baseUrl}/leave/${guildId}`;
     return this.http.post(url, {});
   }
 }

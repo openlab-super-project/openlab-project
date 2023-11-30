@@ -37,6 +37,7 @@ export class GuildComponent {
       memberNames: guild.memberNames
     };
 
+    // sharedService moze ist prec a nacitat guild detail v guild desc component
     this.SharedService.changeGuildInfo(guildInfo);
     this.SharedService.changeGuildId(targetGuildId);
     this.SharedService.changeGuildMemberNames(guild.memberNames);

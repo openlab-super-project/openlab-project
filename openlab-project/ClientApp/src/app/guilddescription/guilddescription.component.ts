@@ -20,7 +20,7 @@ export class GuildescriptionComponent implements OnInit {
   };
   memberNames: string[] = [];
   currentGuildId: number;
-
+  // urobit si signal pre GuildInfo - guildInfo = signal<GuildInfo>(undefined)
 
   constructor(
     private route: Router,
@@ -33,6 +33,7 @@ export class GuildescriptionComponent implements OnInit {
   joinGuild(guildId: number) {
     this.http.post(this.baseUrl + 'guild/join', { guildId: guildId }).subscribe(result => {
       console.log('Joined guild successfully', guildId);
+      // set new value to signal
  
     }, error => {
       console.error('Error joining guild', error);
@@ -44,6 +45,7 @@ export class GuildescriptionComponent implements OnInit {
     } else {
       this.guildService.leaveGuild(this.currentGuildId).subscribe(
         result => {
+          // set new value to signal
           console.log('Left the guild successfully');
         },
         error => {
@@ -54,7 +56,8 @@ export class GuildescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sharedService.currentGuildId.subscribe(
+    // zavolať guildservice.getDetail a vysledok nastavit do signalu
+    /*this.sharedService.currentGuildId.subscribe(
       (guildId) => (this.guildId = guildId, this.currentGuildId = guildId)
     );
 
@@ -76,7 +79,7 @@ export class GuildescriptionComponent implements OnInit {
           }
         );
       }
-    );
+    );*/
   }
   public navigateBack() {
     this.route.navigate(['/guild']);
