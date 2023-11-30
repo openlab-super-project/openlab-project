@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { User } from 'oidc-client';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
  
 export class SharedService {
+  private http: HttpClient
+
   private guildInfoSource = new BehaviorSubject<GuildInfo>({ guildName: '', description: '', memberNames: [] });
   currentGuildInfo = this.guildInfoSource.asObservable();
 

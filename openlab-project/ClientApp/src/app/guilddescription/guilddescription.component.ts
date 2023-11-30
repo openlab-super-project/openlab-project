@@ -1,4 +1,4 @@
-import { Component,Inject } from '@angular/core';
+import { Component,Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService, GuildInfo } from '../shared.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -11,14 +11,15 @@ import { GuildService } from './guild.service';
   templateUrl: './guilddescription.component.html',
   styleUrls: ['./guilddescription.component.css']
 })
-export class GuildescriptionComponent {
+export class GuildescriptionComponent implements OnInit {
+
   guildId: number;
   guildInfo: GuildInfo = {
       guildName: '', description: '',
       memberNames: []
   };
   memberNames: string[] = [];
-
+  currentGuildId: number;
 
 
   constructor(
@@ -32,34 +33,29 @@ export class GuildescriptionComponent {
   joinGuild(guildId: number) {
     this.http.post(this.baseUrl + 'guild/join', { guildId: guildId }).subscribe(result => {
       console.log('Joined guild successfully', guildId);
-      this.refreshGuildData();
+ 
     }, error => {
       console.error('Error joining guild', error);
     });
   }
   leaveGuild() {
-    this.guildService.leaveGuild().subscribe(
-      result => {
-        console.log('Left the guild successfully');
-      },
-      error => {
-        console.error('Error leaving the guild', error);
-      }
-    );
-  }
-
-  refreshGuildData() {
-    this.http.get<GuildInfo>(this.baseUrl + 'guild/' + this.guildId).subscribe(result => {
-      this.guildInfo = result;
-      console.log('Guild information refreshed', result);
-    }, error => {
-      console.error('Error refreshing guild information', error);
-    });
+    if (!this.currentGuildId) {
+      console.warn('User is not in a guild. Leave operation aborted.');
+    } else {
+      this.guildService.leaveGuild(this.currentGuildId).subscribe(
+        result => {
+          console.log('Left the guild successfully');
+        },
+        error => {
+          console.error('Error leaving the guild', error);
+        }
+      );
+    }
   }
 
   ngOnInit() {
     this.sharedService.currentGuildId.subscribe(
-      (guildId) => (this.guildId = guildId)
+      (guildId) => (this.guildId = guildId, this.currentGuildId = guildId)
     );
 
     this.sharedService.currentGuildInfo.subscribe(

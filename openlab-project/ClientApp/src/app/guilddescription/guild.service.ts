@@ -15,8 +15,8 @@ export class GuildService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, { guildId: guildId }, { headers });
   }
-  leaveGuild(): Observable<any> {
-    const url = `${this.apiUrl}/leave`;
+  leaveGuild(guildId: number): Observable<any> {
+    const url = `${this.apiUrl}/leave/${guildId}`;
     return this.http.post(url, {});
   }
 }

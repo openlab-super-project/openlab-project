@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using openlab_project;
 using openlab_project.Data;
@@ -61,6 +62,7 @@ namespace OpenLabProject1.Controllers
                 {
                     return BadRequest(new { message = "You are already a member of a guild." });
                 }
+                
 
                 if (user == null || guild == null)
                 {
@@ -90,24 +92,24 @@ namespace OpenLabProject1.Controllers
         {
             public int GuildId { get; set; }
         }
-        [HttpPost("leave/")]
-        public IActionResult LeaveGuild()
+        [HttpPost("leave/{guildId}")]
+        public IActionResult LeaveGuild(int guildId)
         {
             try
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
 
-                if (user != null && user.GuildInfo != null)
+                if (user != null && user.GuildInfo != null && user.GuildInfo.GuildId == guildId)
                 {
+                
                     user.GuildInfo = null;
                     _context.SaveChanges();
-
                     return Ok(new { message = "Successfully left the guild." });
                 }
                 else
                 {
-                    return BadRequest(new { message = "You are not a member of any guild." });
+                    return BadRequest(new { message = "User is not a member of the specified guild." });
                 }
             }
             catch (Exception ex)
@@ -116,7 +118,6 @@ namespace OpenLabProject1.Controllers
                 return StatusCode(500, new { message = "Internal server error." });
             }
         }
-
         private void UpdateUserGuildId(string userId, int guildId)
         {
             var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
