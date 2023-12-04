@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace OpenLabProject1.Controllers
 {
- 
+
     [ApiController]
     [Route("[controller]")]
     public class GuildController : Controller
@@ -62,7 +62,7 @@ namespace OpenLabProject1.Controllers
                 {
                     return BadRequest(new { message = "You are already a member of a guild." });
                 }
-                
+
 
                 if (user == null || guild == null)
                 {
@@ -102,7 +102,7 @@ namespace OpenLabProject1.Controllers
 
                 if (user != null && user.GuildInfo != null && user.GuildInfo.GuildId == guildId)
                 {
-                
+
                     user.GuildInfo = null;
                     _context.SaveChanges();
                     return Ok(new { message = "Successfully left the guild." });

@@ -25,7 +25,7 @@ export class GuildComponent {
     private SharedService: SharedService) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
-      
+
     }, error => console.error(error));
   }
   selectGuild(guild: GuildDTO) {
@@ -37,13 +37,12 @@ export class GuildComponent {
       memberNames: guild.memberNames
     };
 
-    // sharedService moze ist prec a nacitat guild detail v guild desc component
     this.SharedService.changeGuildInfo(guildInfo);
     this.SharedService.changeGuildId(targetGuildId);
     this.SharedService.changeGuildMemberNames(guild.memberNames);
+    this.SharedService.changeGuildName(guild.guildName);
+
     this.router.navigate(['guild', targetGuildId]);
-    this.SharedService.changeGuildInfo(guildInfo);
-    this.SharedService.changeGuildId(guild.guildId);
   }
 
 }
@@ -56,9 +55,9 @@ interface GuildDTO {
   membersCount: number;
 }
 @NgModule({
-  declarations: [GuildComponent], 
+  declarations: [GuildComponent],
   imports: [BrowserModule, HttpClientModule],
   bootstrap: [GuildComponent]
 })
 
-export class AppModule{ }
+export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component,Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService, GuildInfo } from '../shared.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -15,12 +15,13 @@ export class GuildescriptionComponent implements OnInit {
 
   guildId: number;
   guildInfo: GuildInfo = {
-      guildName: '', description: '',
-      memberNames: []
+    guildName: '', description: '',
+    memberNames: []
   };
   memberNames: string[] = [];
   currentGuildId: number;
-  // urobit si signal pre GuildInfo - guildInfo = signal<GuildInfo>(undefined)
+  currentGuildName: string;
+
 
   constructor(
     private route: Router,
@@ -33,8 +34,7 @@ export class GuildescriptionComponent implements OnInit {
   joinGuild(guildId: number) {
     this.http.post(this.baseUrl + 'guild/join', { guildId: guildId }).subscribe(result => {
       console.log('Joined guild successfully', guildId);
-      // set new value to signal
- 
+
     }, error => {
       console.error('Error joining guild', error);
     });
@@ -45,7 +45,6 @@ export class GuildescriptionComponent implements OnInit {
     } else {
       this.guildService.leaveGuild(this.currentGuildId).subscribe(
         result => {
-          // set new value to signal
           console.log('Left the guild successfully');
         },
         error => {
@@ -56,8 +55,7 @@ export class GuildescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    // zavolať guildservice.getDetail a vysledok nastavit do signalu
-    /*this.sharedService.currentGuildId.subscribe(
+    this.sharedService.currentGuildId.subscribe(
       (guildId) => (this.guildId = guildId, this.currentGuildId = guildId)
     );
 
@@ -79,7 +77,7 @@ export class GuildescriptionComponent implements OnInit {
           }
         );
       }
-    );*/
+    );
   }
   public navigateBack() {
     this.route.navigate(['/guild']);
