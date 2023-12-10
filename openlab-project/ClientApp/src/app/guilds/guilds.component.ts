@@ -40,9 +40,9 @@ export class GuildComponent {
     this.SharedService.changeGuildInfo(guildInfo);
     this.SharedService.changeGuildId(targetGuildId);
     this.SharedService.changeGuildMemberNames(guild.memberNames);
-    this.SharedService.changeGuildName(guild.guildName);
-
     this.router.navigate(['guild', targetGuildId]);
+    this.SharedService.changeGuildInfo(guildInfo);
+    this.SharedService.changeGuildId(guild.guildId);
   }
 
 }

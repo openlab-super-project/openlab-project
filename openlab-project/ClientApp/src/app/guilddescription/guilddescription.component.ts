@@ -20,7 +20,6 @@ export class GuildescriptionComponent implements OnInit {
   };
   memberNames: string[] = [];
   currentGuildId: number;
-  currentGuildName: string;
 
 
   constructor(

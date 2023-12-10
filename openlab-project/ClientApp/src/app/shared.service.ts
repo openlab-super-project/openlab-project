@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -15,11 +15,6 @@ export class SharedService {
   private memberNamesSource = new BehaviorSubject<string[]>([]);
   currentGuildMemberNames = this.memberNamesSource.asObservable();
 
-  private guildNameSource = new BehaviorSubject<string>('');
-  currentGuildName = this.guildNameSource.asObservable();
-
-  
-
   constructor(private http: HttpClient) {
     this.initializeService();
   }
@@ -29,12 +24,21 @@ export class SharedService {
     this.guildIdSource.next(storedGuildId);
 
     if (storedGuildId) {
+      const storedGuildInfo = JSON.parse(localStorage.getItem('currentGuildInfo'));
+      if (storedGuildInfo) {
+        this.changeGuildInfo(storedGuildInfo);
+      }
+
+      const storedMemberNames = JSON.parse(localStorage.getItem('currentMemberNames'));
+      if (storedMemberNames) {
+        this.changeGuildMemberNames(storedMemberNames);
+      }
+
       this.loadGuildData(storedGuildId);
     }
   }
-
   private loadGuildData(guildId: number): void {
-    this.http.get<GuildInfo>(`/api/guild/${guildId}`).subscribe(
+    this.http.get<GuildInfo>(`https://localhost:44442/api/guild/${guildId}`).subscribe(
       (guildData) => {
         this.changeGuildInfo(guildData);
       },
@@ -51,6 +55,8 @@ export class SharedService {
 
   changeGuildInfo(guildInfo: GuildInfo): void {
     this.guildInfoSource.next(guildInfo);
+    // Persist guild information in local storage
+    localStorage.setItem('currentGuildInfo', JSON.stringify(guildInfo));
   }
 
   changeGuildId(guildId: number): void {
@@ -61,12 +67,9 @@ export class SharedService {
 
   changeGuildMemberNames(memberNames: string[]): void {
     this.memberNamesSource.next(memberNames);
-  }
-  changeGuildName(guildName: string): void {
-    this.guildNameSource.next(guildName);
+    localStorage.setItem('currentMemberNames', JSON.stringify(memberNames));
   }
 }
-
 export interface GuildInfo {
   guildName: string;
   description: string;
