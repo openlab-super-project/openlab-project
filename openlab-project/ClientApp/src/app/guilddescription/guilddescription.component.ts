@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedService, GuildInfo } from '../shared.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { GuildService } from './guild.service';
+import { GuildService, GuildDTO } from './guild.service';
 
 
 
@@ -14,17 +13,15 @@ import { GuildService } from './guild.service';
 export class GuildescriptionComponent implements OnInit {
 
   guildId: number;
-  guildInfo: GuildInfo = {
-    guildName: '', description: '',
-    memberNames: []
-  };
-  memberNames: string[] = [];
   currentGuildId: number;
+
+  guildInfo = signal<GuildDTO>(undefined);
+  memberNames: string[] = [];
 
 
   constructor(
-    private route: Router,
-    private sharedService: SharedService,
+    private route: ActivatedRoute,
+    private router: Router,
     private http: HttpClient,
     private guildService: GuildService,
     @Inject('BASE_URL') private baseUrl: string
@@ -39,12 +36,14 @@ export class GuildescriptionComponent implements OnInit {
     });
   }
   leaveGuild() {
-    if (!this.currentGuildId) {
+    if (!this.guildId) {
       console.warn('User is not in a guild. Leave operation aborted.');
     } else {
-      this.guildService.leaveGuild(this.currentGuildId).subscribe(
+      this.guildService.leaveGuild(this.guildId).subscribe(
         result => {
           console.log('Left the guild successfully');
+          this.guildId = null; // Update the guildId property to null
+          console.log('guildId set to null:', this.guildId);
         },
         error => {
           console.error('Error leaving the guild', error);
@@ -52,33 +51,13 @@ export class GuildescriptionComponent implements OnInit {
       );
     }
   }
-
   ngOnInit() {
-    this.sharedService.currentGuildId.subscribe(
-      (guildId) => (this.guildId = guildId, this.currentGuildId = guildId)
-    );
+    const routeParams = this.route.snapshot.paramMap;
+    this.guildId = Number(routeParams.get('guildId'));
 
-    this.sharedService.currentGuildInfo.subscribe(
-      (guildInfo) => (this.guildInfo = guildInfo)
-    );
-
-    this.sharedService.currentGuildMemberNames.subscribe(
-      (memberNames) => {
-        this.memberNames = memberNames;
-      }
-    );
-    this.sharedService.currentGuildId.subscribe(
-      (guildId) => {
-        this.guildId = guildId;
-        this.sharedService.currentGuildMemberNames.subscribe(
-          (memberNames) => {
-            this.memberNames = memberNames;
-          }
-        );
-      }
-    );
+    this.guildService.getGuildInfo(this.guildId).subscribe(result => { this.guildInfo.set(result) }, error => console.error(error));
   }
   public navigateBack() {
-    this.route.navigate(['/guild']);
+    this.router.navigate(['/guild']);
   }
 }

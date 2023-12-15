@@ -5,7 +5,7 @@ import { GuildComponent } from '../app/guilds/guilds.component'
 const routes: Routes = [
   { path: 'guild', component: GuildComponent },
   { path: 'guild/:guildId', component: GuildescriptionComponent },
-  { path: '', redirectTo: '/guild', pathMatch: 'full'}
+  { path: '', redirectTo: '/guild', pathMatch: 'full' }
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

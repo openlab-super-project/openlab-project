@@ -1,10 +1,10 @@
 <div>
-  <h2 class="guild-info" style="margin: 10px;">Guild Name: {{ guildInfo.guildName }} ({{ guildId }})</h2>
-  <p class="guild-info" style="margin: 10px;">Description: {{ guildInfo.description }}</p>
+  <h2 class="guild-info" style="margin: 10px;">Guild Name: {{ guildInfo().guildName }} ({{ guildId }})</h2>
+  <p class="guild-info" style="margin: 10px;">Description: {{ guildInfo().description }}</p>
 
-  <h3 class="guild-info"><b>Members of {{guildInfo.guildName}}:</b></h3>
+  <h3 class="guild-info"><b>Members of {{guildInfo().guildName}}:</b></h3>
   <ul class="member-list">
-    <li *ngFor="let memberName of memberNames">{{ memberName }}</li>
+    <li *ngFor="let memberName of guildInfo().memberNames">{{ memberName }}</li>
   </ul>
   <button class="join-button" (click)="joinGuild(guildId)">Join</button>
   <button class="leave-button" (click)="leaveGuild()">Leave</button> 

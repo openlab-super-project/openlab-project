@@ -16,7 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GuildComponent } from './guilds/guilds.component';
 import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
-import {AppRoutingModule } from '../app/app-routing.module'
+import { AppRoutingModule } from '../app/app-routing.module'
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -27,14 +27,13 @@ import { CommonModule } from '@angular/common';
     CounterComponent,
     FetchDataComponent,
     DashboardComponent,
-    GuildescriptionComponent
+    GuildescriptionComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     ReactiveFormsModule,
     MatProgressBarModule,
-    RouterModule,
     FormsModule,
     AppRoutingModule,
     CommonModule,
@@ -45,7 +44,9 @@ import { CommonModule } from '@angular/common';
       { path: 'home', component: HomeComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'guilds', component: GuildComponent }
+      { path: 'guild', component: GuildComponent },
+      { path: 'guild/:guildId', component: GuildescriptionComponent },
+      { path: '', redirectTo: '/guild', pathMatch: 'full' }
 
     ])
   ],

@@ -92,7 +92,7 @@ namespace OpenLabProject1.Controllers
         {
             public int GuildId { get; set; }
         }
-        [HttpPost("leave/{guildId}")]
+        [HttpDelete("leave/{guildId}")]
         public IActionResult LeaveGuild(int guildId)
         {
             try
@@ -127,6 +127,23 @@ namespace OpenLabProject1.Controllers
                 user.GuildInfo = new GuildInfo { GuildId = guildId };
                 _context.SaveChanges();
             }
+        }
+        [HttpGet]
+        [Route("getGuildInfo")]
+        public GuildDTO getGuildInfo(int guildId)
+        {
+            GuildInfo guild = _context.Guild.Where(g => g.GuildId== guildId).FirstOrDefault();
+
+            var info = new GuildDTO
+            {
+                GuildId = guildId,
+                GuildName = guild.GuildName,
+                Description = guild.Description,
+                MembersCount = guild.MembersCount,
+                MaxMembersCount = guild.MaxMembersCount,
+                MemberNames = GetGuildMemberNames(guildId)
+            };
+            return info;
         }
 
     }

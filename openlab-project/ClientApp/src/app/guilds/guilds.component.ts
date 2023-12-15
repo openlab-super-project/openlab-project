@@ -2,8 +2,8 @@ import { Component, NgModule, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AppRoutingModule } from '../app-routing.module'
-import { GuildInfo, SharedService } from '../shared.service';
+import { RouterModule } from '@angular/router';
+//import { AppRoutingModule } from '../app-routing.module'
 
 @Component({
   selector: 'app-guild',
@@ -14,37 +14,19 @@ import { GuildInfo, SharedService } from '../shared.service';
 
 export class GuildComponent {
 
-  guildName: string = "no data";
-  Description: string = "no data";
+  guildName: string = "no guildname";
+  Description: string = "no description";
   MaxMembersCount: number = 0;
   MembersCount: number = 0;
 
   public GuildData: GuildDTO[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router, private Http: HttpClient,
-    private SharedService: SharedService) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router, private Http: HttpClient) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
 
     }, error => console.error(error));
   }
-  selectGuild(guild: GuildDTO) {
-    const targetGuildId = guild.guildId;
-
-    const guildInfo: GuildInfo = {
-      guildName: guild.guildName,
-      description: guild.description,
-      memberNames: guild.memberNames
-    };
-
-    this.SharedService.changeGuildInfo(guildInfo);
-    this.SharedService.changeGuildId(targetGuildId);
-    this.SharedService.changeGuildMemberNames(guild.memberNames);
-    this.router.navigate(['guild', targetGuildId]);
-    this.SharedService.changeGuildInfo(guildInfo);
-    this.SharedService.changeGuildId(guild.guildId);
-  }
-
 }
 interface GuildDTO {
   memberNames: any;
@@ -56,7 +38,7 @@ interface GuildDTO {
 }
 @NgModule({
   declarations: [GuildComponent],
-  imports: [BrowserModule, HttpClientModule],
+  imports: [BrowserModule, HttpClientModule, RouterModule],
   bootstrap: [GuildComponent]
 })
 
