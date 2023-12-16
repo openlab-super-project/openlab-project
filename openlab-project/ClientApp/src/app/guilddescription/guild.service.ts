@@ -18,7 +18,7 @@ export class GuildService {
     return this.http.post(url, { guildId: guildId }, { headers });
   }
   leaveGuild(guildId: number): Observable<any> {
-    const url = `${this.apiUrl}leave/${guildId}`;
+    const url = `${this.apiUrl}guild/leave/${guildId}`;
     return this.http.delete(url).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('Error leaving the guild', error);
