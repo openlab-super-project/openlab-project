@@ -7,7 +7,8 @@
     <li *ngFor="let memberName of guildInfo().memberNames">{{ memberName }}</li>
   </ul>
   <button class="join-button" (click)="joinGuild(guildId)">Join</button>
-  <button class="leave-button" (click)="leaveGuild()">Leave</button> 
+  <button class="leave-button" (click)="leaveGuild()">Leave</button>
   <br />
   <a style="color:white; margin:10px; text-decoration:underline; cursor:pointer;" (click)="navigateBack()">Back</a>
 </div>
+

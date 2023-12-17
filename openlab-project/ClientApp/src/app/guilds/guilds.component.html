@@ -1,8 +1,8 @@
 <h1 style="text-align: center;">Guilds</h1>
 <br>
 
-<div class="accordion" id="accordionExample" >
-  <div class="accordion-item" *ngFor="let guilds of GuildData; let i = index" >
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item" *ngFor="let guilds of GuildData; let i = index">
     <h2 class="accordion-header" [attr.id]="'heading' + i">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" [attr.aria-controls]="'#collapse' + i" style="background-color: black; border: 1px solid white; color: white;">
         <strong>{{ guilds.guildName }}</strong>&nbsp; [{{ guilds.membersCount }}/{{ guilds.maxMembersCount }}]
@@ -11,12 +11,26 @@
     <div [attr.id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'#heading' + i" data-bs-parent="#accordionExample" style="background-color: black; border: 1px solid white; color: white;">
       <div class="accordion-body">
         <p>{{guilds.description}}</p>
-        <a class="btn btn-primary" [title]="guilds.guildName  + ' details'" [routerLink]="['/guild', guilds.guildId]">Details
-          </a>
+        <a class="btn btn-primary" [title]="guilds.guildName  + ' details'" [routerLink]="['/guild', guilds.guildId]">
+          Details
+        </a>
       </div>
     </div>
   </div>
 </div>
+<br /><br />
+<div class="guild-form">
+  <form action="/action_page.php">
+    <label for="fname">Guildname:</label><br>
+    <input type="text" id="guildname" name="guildname" value="John"><br>
+    <label for="lname">Description:</label><br>
+    <input type="text" id="description" name="description" value="This is a guild ..."><br>
+    <label for="fname">MaxMembers:</label><br>
+    <input type="number" id="maxmembers" name="maxmembers" value="10"><br>
+    <input type="submit" value="Submit" class="submit-button" style="background: #008000; width: 100%;">
+  </form>
+</div>
+
 
 
 
