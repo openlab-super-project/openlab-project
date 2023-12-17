@@ -16,7 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GuildComponent } from './guilds/guilds.component';
 import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
-import { AppRoutingModule } from '../app/app-routing.module'
+import { AppRoutingModule } from '../app/app-routing.module';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
     FetchDataComponent,
     DashboardComponent,
     GuildescriptionComponent,
+    GuildComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,7 +42,7 @@ import { CommonModule } from '@angular/common';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'home', component: HomeComponent},
+      { path: 'home', component: HomeComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'guild', component: GuildComponent },

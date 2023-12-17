@@ -36,10 +36,5 @@ interface GuildDTO {
   maxMembersCount: number;
   membersCount: number;
 }
-@NgModule({
-  declarations: [GuildComponent],
-  imports: [BrowserModule, HttpClientModule, RouterModule],
-  bootstrap: [GuildComponent]
-})
 
 export class AppModule { }

@@ -2,6 +2,7 @@ import { Component, Inject, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { GuildService, GuildDTO } from './guild.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -14,10 +15,8 @@ export class GuildescriptionComponent implements OnInit {
 
   guildId: number;
   currentGuildId: number;
-
   guildInfo = signal<GuildDTO>(undefined);
   memberNames: string[] = [];
-
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +27,11 @@ export class GuildescriptionComponent implements OnInit {
   ) { }
 
   joinGuild(guildId: number) {
-    this.http.post(this.baseUrl + 'guild/join', { guildId: guildId }).subscribe(result => {
-      console.log('Joined guild successfully', guildId);
-
-    }, error => {
-      console.error('Error joining guild', error);
-    });
+    this.guildService.joinGuild(this.guildId).subscribe(
+      result => { this.guildInfo.set(result); }, error => {
+        console.error('Error joining the guild', error);
+      }
+    )
   }
   leaveGuild() {
     if (!this.guildId) {
@@ -41,9 +39,7 @@ export class GuildescriptionComponent implements OnInit {
     } else {
       this.guildService.leaveGuild(this.guildId).subscribe(
         result => {
-          console.log('Left the guild successfully');
-          this.guildId = null; // Update the guildId property to null
-          console.log('guildId set to null:', this.guildId);
+          this.guildInfo.set(result);
         },
         error => {
           console.error('Error leaving the guild', error);

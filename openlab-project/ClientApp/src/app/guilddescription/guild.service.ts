@@ -13,18 +13,13 @@ export class GuildService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private apiUrl: string) { }
 
   joinGuild(guildId: number): Observable<any> {
-    const url = `${this.apiUrl}/join`;
+    const url = `${this.apiUrl}guild/join/${guildId}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(url, { guildId: guildId }, { headers });
+    return this.http.put(url, { guildId: guildId }, { headers });
   }
   leaveGuild(guildId: number): Observable<any> {
     const url = `${this.apiUrl}guild/leave/${guildId}`;
-    return this.http.delete(url).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error leaving the guild', error);
-        return throwError(error);
-      })
-    );
+    return this.http.delete(url);
   }
   getGuildInfo(guildId: number): Observable<GuildDTO> {
     let queryParams = new HttpParams();

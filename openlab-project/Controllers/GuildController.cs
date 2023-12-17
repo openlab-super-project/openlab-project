@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using openlab_project;
 using openlab_project.Data;
 using openlab_project.Models;
+using System;
 using System.Security.Claims;
 
 namespace OpenLabProject1.Controllers
@@ -47,40 +48,40 @@ namespace OpenLabProject1.Controllers
             IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
             return users.Where(u => u.GuildInfo.GuildId == guildId).Select(u => u.UserName).ToList();
         }
-        [HttpPost("join/")]
-        public IActionResult JoinGuild([FromBody] GuildJoinRequest request)
+        public class GuildJoinRequest
         {
-            int guildId = request.GuildId;
+            public int GuildId { get; set; }
+        }
+        [HttpDelete("leave/{guildId}")]
+        public ActionResult<GuildDTO> LeaveGuild(int guildId)
+        {
             try
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
+                GuildInfo guild = _context.Guild.Where(g => g.GuildId== guildId).FirstOrDefault();
 
-                var guild = _context.Guild.FirstOrDefault(g => g.GuildId == guildId);
 
-                if (user != null && user.GuildInfo != null)
+                if (user != null && user.GuildInfo != null && user.GuildInfo.GuildId == guildId)
                 {
-                    return BadRequest(new { message = "You are already a member of a guild." });
+
+                    user.GuildInfo = null;
+                    _context.SaveChanges();
+                    var info = new GuildDTO
+                    {
+                        GuildId = guildId,
+                        GuildName = guild.GuildName,
+                        Description = guild.Description,
+                        MembersCount = guild.MembersCount,
+                        MaxMembersCount = guild.MaxMembersCount,
+                        MemberNames = GetGuildMemberNames(guildId)
+                    };
+                    return Ok(info);
                 }
-
-
-                if (user == null || guild == null)
+                else
                 {
-                    return NotFound(new { message = "User or guild not found." });
+                    return BadRequest(new { message = "User is not a member of the specified guild." });
                 }
-
-                if (guild.Members.Count >= guild.MaxMembersCount)
-                {
-                    return BadRequest(new { message = "Guild is already full." });
-                }
-
-                user.GuildInfo = guild;
-                _context.SaveChanges();
-
-                UpdateUserGuildId(userId, guildId);
-
-                Console.WriteLine($"Joining guild with ID: {request.GuildId}");
-                return Ok(new { message = "Successfully joined guild." });
             }
             catch (Exception ex)
             {
@@ -88,24 +89,31 @@ namespace OpenLabProject1.Controllers
                 return StatusCode(500, new { message = "Internal server error." });
             }
         }
-        public class GuildJoinRequest
-        {
-            public int GuildId { get; set; }
-        }
-        [HttpDelete("leave/{guildId}")]
-        public IActionResult LeaveGuild(int guildId)
+        [HttpPut("join/{guildId}")]
+        public ActionResult<GuildDTO> JoinGuild(int guildId)
         {
             try
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
+                GuildInfo guild = _context.Guild.Where(g => g.GuildId== guildId).FirstOrDefault();
 
-                if (user != null && user.GuildInfo != null && user.GuildInfo.GuildId == guildId)
+
+                if (user != null && user.GuildInfo == null)
                 {
 
-                    user.GuildInfo = null;
+                    user.GuildInfo = guild;
                     _context.SaveChanges();
-                    return Ok(new { message = "Successfully left the guild." });
+                    var info = new GuildDTO
+                    {
+                        GuildId = guildId,
+                        GuildName = guild.GuildName,
+                        Description = guild.Description,
+                        MembersCount = guild.MembersCount,
+                        MaxMembersCount = guild.MaxMembersCount,
+                        MemberNames = GetGuildMemberNames(guildId)
+                    };
+                    return Ok(info);
                 }
                 else
                 {
@@ -143,7 +151,10 @@ namespace OpenLabProject1.Controllers
                 MaxMembersCount = guild.MaxMembersCount,
                 MemberNames = GetGuildMemberNames(guildId)
             };
+
+
             return info;
+
         }
 
     }
