@@ -16,9 +16,12 @@
   width: 100%;
 }
 
-.guild-form button {
-  padding: 10px;
-}
+  .guild-form button {
+    background-color: #008000;
+    padding: 10px;
+    width: 100%;
+    margin: 5px;
+  }
 
   .guild-form button:hover {
     background: #004d00;

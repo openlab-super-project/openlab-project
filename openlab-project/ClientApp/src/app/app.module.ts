@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Component, NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -18,7 +17,6 @@ import { GuildComponent } from './guilds/guilds.component';
 import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
 import { AppRoutingModule } from '../app/app-routing.module';
 import { CommonModule } from '@angular/common';
-import { CreateGuildComponent } from './create-guild/create-guild.component';
 
 @NgModule({
   declarations: [
@@ -29,15 +27,12 @@ import { CreateGuildComponent } from './create-guild/create-guild.component';
     FetchDataComponent,
     DashboardComponent,
     GuildescriptionComponent,
-    GuildComponent,
-    CreateGuildComponent
+    GuildComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    ReactiveFormsModule,
     MatProgressBarModule,
-    FormsModule,
     AppRoutingModule,
     CommonModule,
     ApiAuthorizationModule,
