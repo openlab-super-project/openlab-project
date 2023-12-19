@@ -18,6 +18,7 @@ import { GuildComponent } from './guilds/guilds.component';
 import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
 import { AppRoutingModule } from '../app/app-routing.module';
 import { CommonModule } from '@angular/common';
+import { CreateGuildComponent } from './create-guild/create-guild.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CommonModule } from '@angular/common';
     FetchDataComponent,
     DashboardComponent,
     GuildescriptionComponent,
-    GuildComponent
+    GuildComponent,
+    CreateGuildComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

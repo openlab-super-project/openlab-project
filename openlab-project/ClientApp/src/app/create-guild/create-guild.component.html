@@ -1,0 +1,16 @@
+<br />
+<br />
+<br />
+<h1 style="text-align:center;">Create your own Guild!</h1>
+<div class="guild-form">
+  <form action="">
+    <br /><br /><br />
+    <label for="fname">Guildname:</label><br>
+    <input type="text" #box id="guildname" name="guildname" placeholder="Guildname"><br>
+    <label for="lname">Description:</label><br>
+    <input type="text" #box1 id="description" name="description" placeholder="Description"><br>
+    <label for="fname">MaxMembers:</label><br>
+    <input type="number" #box2 id="maxmembers" name="maxmembers" placeholder="Maxmembers"><br>
+    <input type="submit" value="Submit" class="submit-button" style="background: #008000; width: 100%;" (click)="getValue(box.value, box1.value, box2.value)">
+  </form>
+</div>

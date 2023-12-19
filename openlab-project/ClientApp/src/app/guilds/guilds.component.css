@@ -1,22 +1,5 @@
-.guild-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+.btn-div{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
-.guild-form input {
-    border: 2px solid white;
-    background: black;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 5px;
-    width: 100%;
-}
-.guild-form button{
-    padding: 10px;
-}
-.guild-form button:hover {
-  background: #004d00;
-}
-

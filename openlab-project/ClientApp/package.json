@@ -11,7 +11,7 @@
     "build:ssr": "ng run openlab_project:server:dev",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate-dash": "ng g c guildescription --module=app.module.ts",
+    "generate-component": "ng g c create-guild --module=app.module.ts",
     "dowmaterial": "ng add @angular/material"
   },
   "private": true,
