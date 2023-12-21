@@ -59,7 +59,7 @@ namespace OpenLabProject1.Controllers
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
-                GuildInfo guild = _context.Guild.Where(g => g.GuildId== guildId).FirstOrDefault();
+                GuildInfo guild = _context.Guild.Where(g => g.GuildId == guildId).FirstOrDefault();
 
 
                 if (user != null && user.GuildInfo != null && user.GuildInfo.GuildId == guildId)
@@ -96,7 +96,7 @@ namespace OpenLabProject1.Controllers
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = _context.ApplicationUsers.Include(u => u.GuildInfo).FirstOrDefault(u => u.Id == userId);
-                GuildInfo guild = _context.Guild.Where(g => g.GuildId== guildId).FirstOrDefault();
+                GuildInfo guild = _context.Guild.Where(g => g.GuildId == guildId).FirstOrDefault();
 
 
                 if (user != null && user.GuildInfo == null)
@@ -140,7 +140,7 @@ namespace OpenLabProject1.Controllers
         [Route("getGuildInfo")]
         public GuildDTO getGuildInfo(int guildId)
         {
-            GuildInfo guild = _context.Guild.Where(g => g.GuildId== guildId).FirstOrDefault();
+            GuildInfo guild = _context.Guild.Where(g => g.GuildId == guildId).FirstOrDefault();
 
             var info = new GuildDTO
             {
@@ -152,9 +152,13 @@ namespace OpenLabProject1.Controllers
                 MemberNames = GetGuildMemberNames(guildId)
             };
 
-
             return info;
-
+        }
+        [HttpPut("create")]
+        public ActionResult<GuildDTO> CreateGuild()
+        {
+            var info = "Ahoj";
+            return Ok(new { message = info});
         }
 
     }

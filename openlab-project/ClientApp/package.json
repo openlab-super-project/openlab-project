@@ -12,6 +12,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate-component": "ng g c create-guild --module=app.module.ts",
+    "generate-service": "ng g s create-guild-service",
     "dowmaterial": "ng add @angular/material"
   },
   "private": true,
