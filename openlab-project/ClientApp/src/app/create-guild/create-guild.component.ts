@@ -26,8 +26,11 @@ export class CreateGuildComponent {
       descriptionBE = this.GuildForm.value.description;
       maxmembersBE = this.GuildForm.value.maxmembers;
       this.createGuildService.createGuild(guildnameBE, descriptionBE, maxmembersBE).subscribe();
+
+      this.router.navigate(['/guild']).then(() => {
+        window.location.reload(); 
+      });
     }
-    this.router.navigate(['/createguild']);
   }
 }
 export interface GuildDTO {

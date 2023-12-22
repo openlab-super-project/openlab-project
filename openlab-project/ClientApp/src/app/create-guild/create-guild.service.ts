@@ -15,7 +15,7 @@ export class CreateGuildService {
   createGuild(guildnameBE: string, descriptionBE: string, maxmembersBE: number) {
     const url = `${this.apiUrl}guild/create`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put(url, { guildnameBE, descriptionBE, maxmembersBE }, { headers });
+    return this.http.put(url, { GuildName: guildnameBE, Description: descriptionBE, MaxMembersCount: maxmembersBE }, { headers });
   }
   deleteGuild() {
 

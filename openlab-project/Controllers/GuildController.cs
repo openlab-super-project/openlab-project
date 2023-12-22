@@ -155,10 +155,41 @@ namespace OpenLabProject1.Controllers
             return info;
         }
         [HttpPut("create")]
-        public ActionResult<GuildDTO> CreateGuild()
+        public ActionResult<GuildDTO> CreateGuild([FromBody] GuildDTO guildDTO)
         {
-            var info = "Ahoj";
-            return Ok(new { message = info});
+            try
+            {
+                // Assuming you are using Entity Framework DbContext named ApplicationDbContext
+                using (var context = _context)
+                {
+                    // Create a new GuildInfo entity from GuildDTO
+                    var newGuild = new GuildInfo
+                    {
+                        GuildName = guildDTO.GuildName,
+                        MaxMembersCount = guildDTO.MaxMembersCount,
+                        Description = guildDTO.Description
+                        // MembersCount will default to 0, so no need to set it explicitly
+                    };
+
+                    // Add the newGuild to the context and save changes
+                    context.Guild.Add(newGuild);
+                    context.SaveChanges();
+
+                    var info = new CreateGuildDTO
+                    {
+                        GuildName = newGuild.GuildName,
+                        Description = newGuild.Description,
+                        MaxMembersCount = newGuild.MaxMembersCount,
+                    };
+
+                    return Ok(info);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, new { message = "Internal server error." });
+            }
         }
 
     }

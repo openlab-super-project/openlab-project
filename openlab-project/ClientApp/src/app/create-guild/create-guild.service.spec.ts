@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-
 import { CreateGuildService } from './create-guild.service';
 
-describe('CreateGuildServiceService', () => {
+describe('CreateGuildService', () => {
   let service: CreateGuildService;
 
   beforeEach(() => {
