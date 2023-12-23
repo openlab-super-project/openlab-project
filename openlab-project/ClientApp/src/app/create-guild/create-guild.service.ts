@@ -17,7 +17,9 @@ export class CreateGuildService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put(url, { GuildName: guildnameBE, Description: descriptionBE, MaxMembersCount: maxmembersBE }, { headers });
   }
-  deleteGuild() {
-
+  deleteGuild(guildId: number): Observable<any> {
+    console.log("Hi");
+    const url = `${this.apiUrl}guild/delete/${guildId}`;
+    return this.http.delete(url);
   }
 }

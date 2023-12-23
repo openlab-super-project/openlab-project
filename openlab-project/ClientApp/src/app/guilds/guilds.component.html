@@ -11,8 +11,11 @@
     <div [attr.id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'#heading' + i" data-bs-parent="#accordionExample" style="background-color: black; border: 1px solid white; color: white;">
       <div class="accordion-body">
         <p>{{guilds.description}}</p>
-        <a class="btn btn-primary" [title]="guilds.guildName  + ' details'" [routerLink]="['/guild', guilds.guildId]">
+        <a class="btn btn-primary" [routerLink]="['/guild', guilds.guildId]">
           Details
+        </a>
+        <a class="btn btn-primary" (click)="deleteGuild(guilds.guildId)">
+          Delete
         </a>
       </div>
     </div>

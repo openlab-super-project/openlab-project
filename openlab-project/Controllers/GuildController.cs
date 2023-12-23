@@ -154,36 +154,24 @@ namespace OpenLabProject1.Controllers
 
             return info;
         }
-        [HttpPut("create")]
-        public ActionResult<GuildDTO> CreateGuild([FromBody] GuildDTO guildDTO)
+        [HttpDelete("delete/{guildId}")]
+        public IActionResult DeleteGuild(int guildId)
         {
             try
             {
-                // Assuming you are using Entity Framework DbContext named ApplicationDbContext
-                using (var context = _context)
+                // Find the guild in the database
+                var guild = _context.Guild.FirstOrDefault(g => g.GuildId == guildId);
+
+                if (guild == null)
                 {
-                    // Create a new GuildInfo entity from GuildDTO
-                    var newGuild = new GuildInfo
-                    {
-                        GuildName = guildDTO.GuildName,
-                        MaxMembersCount = guildDTO.MaxMembersCount,
-                        Description = guildDTO.Description
-                        // MembersCount will default to 0, so no need to set it explicitly
-                    };
-
-                    // Add the newGuild to the context and save changes
-                    context.Guild.Add(newGuild);
-                    context.SaveChanges();
-
-                    var info = new CreateGuildDTO
-                    {
-                        GuildName = newGuild.GuildName,
-                        Description = newGuild.Description,
-                        MaxMembersCount = newGuild.MaxMembersCount,
-                    };
-
-                    return Ok(info);
+                    return NotFound(new { message = "Guild not found." });
                 }
+
+
+                _context.Guild.Remove(guild);
+                _context.SaveChanges();
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -191,6 +179,5 @@ namespace OpenLabProject1.Controllers
                 return StatusCode(500, new { message = "Internal server error." });
             }
         }
-
     }
 }
