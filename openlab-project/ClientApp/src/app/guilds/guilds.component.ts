@@ -1,4 +1,4 @@
-import { Component, NgModule, Inject } from '@angular/core';
+import { Component, NgModule, Inject, signal } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -20,16 +20,27 @@ export class GuildComponent {
   MembersCount: number = 0;
 
   public GuildData: GuildDTO[] = [];
+  dbGuild = signal < GuildDTO > (undefined);
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router, private Http: HttpClient, private createGuildService: CreateGuildService) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
-
+      /*this.dbGuild.set(guild => {
+        const guildDTO: GuildDTO = guild as GuildDTO;
+        this.GuildData.push(guildDTO);
+      });*/
     }, error => console.error(error));
   }
   deleteGuild(guildId: number) {
-    this.createGuildService.deleteGuild(guildId).subscribe();
-    window.location.reload();
+    this.createGuildService.deleteGuild(guildId).subscribe(
+      () => {
+        const index = this.GuildData.findIndex(guild => guild.guildId === guildId);
+        if (index !== -1) {
+          this.GuildData.splice(index, 1);
+        }
+      },
+      error => console.error(error)
+    );
   }
 }
 interface GuildDTO {

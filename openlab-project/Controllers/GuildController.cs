@@ -159,7 +159,6 @@ namespace OpenLabProject1.Controllers
         {
             try
             {
-                // Find the guild in the database
                 var guild = _context.Guild.FirstOrDefault(g => g.GuildId == guildId);
 
                 if (guild == null)
@@ -179,5 +178,38 @@ namespace OpenLabProject1.Controllers
                 return StatusCode(500, new { message = "Internal server error." });
             }
         }
-    }
+        [HttpPut("create")]
+        public ActionResult<GuildDTO> CreateGuild([FromBody] GuildDTO guildDTO)
+        {
+            try
+            {
+                using (var context = _context)
+                {
+                    var newGuild = new GuildInfo
+                    {
+                        GuildName = guildDTO.GuildName,
+                        MaxMembersCount = guildDTO.MaxMembersCount,
+                        Description = guildDTO.Description
+                    };
+
+                    context.Guild.Add(newGuild);
+                    context.SaveChanges();
+
+                    var info = new CreateGuildDTO
+                    {
+                        GuildName = newGuild.GuildName,
+                        Description = newGuild.Description,
+                        MaxMembersCount = newGuild.MaxMembersCount,
+                    };
+
+                    return Ok(info);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, new { message = "Internal server error." });
+            }
+        }
+        }
 }

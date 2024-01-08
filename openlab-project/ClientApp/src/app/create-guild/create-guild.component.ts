@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { CreateGuildService } from '../create-guild/create-guild.service';
   imports: [ReactiveFormsModule]
 })
 export class CreateGuildComponent {
+  
   constructor(private router: Router, @Inject('BASE_URL') private apiUrl: string, private createGuildService: CreateGuildService) { }
   GuildForm = new FormGroup({
     guildname: new FormControl('', Validators.required),
