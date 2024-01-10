@@ -17,6 +17,7 @@ import { GuildComponent } from './guilds/guilds.component';
 import { GuildescriptionComponent } from './guilddescription/guilddescription.component';
 import { AppRoutingModule } from '../app/app-routing.module';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     MatProgressBarModule,
     AppRoutingModule,
+    FormsModule,
     CommonModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([

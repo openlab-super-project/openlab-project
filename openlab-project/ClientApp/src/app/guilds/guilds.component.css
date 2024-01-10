@@ -6,3 +6,25 @@
 a{
     margin: 10px;
 }
+.search-bar-box {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+.search-bar1 {
+  margin: 5px;
+  background-color: black;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+}
+#search {
+  width: 60%;
+  box-sizing: border-box; 
+}
+.btn1:hover {
+  background-color: #262626;
+}

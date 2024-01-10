@@ -19,8 +19,13 @@ export class GuildComponent {
   MaxMembersCount: number = 0;
   MembersCount: number = 0;
 
+  searchQuery: string = '';
+
   public GuildData: GuildDTO[] = [];
-  dbGuild = signal < GuildDTO > (undefined);
+  public filteredGuilds: GuildDTO[] = [];
+
+  dbGuild = signal<GuildDTO>(undefined);
+
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router, private Http: HttpClient, private createGuildService: CreateGuildService) {
     http.get<GuildDTO[]>(baseUrl + 'guild').subscribe(result => {
@@ -42,6 +47,19 @@ export class GuildComponent {
       error => console.error(error)
     );
   }
+  searchGuilds() {
+    if (this.searchQuery.trim() === '') {
+      // If search query is empty, show all guilds
+      this.filteredGuilds = [...this.GuildData];
+    } else {
+      // If search query is not empty, filter guilds based on the query
+      const lowerCaseQuery = this.searchQuery.toLowerCase();
+      this.filteredGuilds = this.GuildData.filter(guild =>
+        guild.guildName.toLowerCase().includes(lowerCaseQuery)
+      );
+    }
+  }
+
 }
 interface GuildDTO {
   memberNames: any;

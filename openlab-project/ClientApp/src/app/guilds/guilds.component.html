@@ -1,4 +1,11 @@
 <h1 style="text-align: center;">Guilds</h1>
+<br />
+<div class="search-bar-box">
+  <form action="/search" method="GET" class="search-bar">
+    <input type="text" [(ngModel)]="searchQuery" class="search-bar1" placeholder="Search guilds..." style="width: 60%; background-color: black; color: white; border: 1px solid white;">
+    <button type="button" class="btn1" (click)="searchGuilds()" style="background: black; padding: 8px; margin-right: 6px; border-radius: 0; border: 0;">Search</button>
+  </form>
+</div>
 <br>
 
 <div class="accordion" id="accordionExample">
