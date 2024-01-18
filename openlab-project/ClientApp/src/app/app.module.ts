@@ -18,6 +18,8 @@ import { GuildescriptionComponent } from './guilddescription/guilddescription.co
 import { AppRoutingModule } from '../app/app-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SearchPipe } from '../app/guilds/search.pipe';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     FetchDataComponent,
     DashboardComponent,
     GuildescriptionComponent,
-    GuildComponent
+    GuildComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

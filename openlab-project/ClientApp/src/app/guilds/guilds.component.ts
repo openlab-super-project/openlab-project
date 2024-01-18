@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CreateGuildService } from '../create-guild/create-guild.service';
+import { SearchPipe } from '../guilds/search.pipe';
 
 @Component({
   selector: 'app-guild',
@@ -19,7 +20,7 @@ export class GuildComponent {
   MaxMembersCount: number = 0;
   MembersCount: number = 0;
 
-  searchQuery: string = '';
+  searchText = '';
 
   public GuildData: GuildDTO[] = [];
   public filteredGuilds: GuildDTO[] = [];
@@ -34,6 +35,7 @@ export class GuildComponent {
         const guildDTO: GuildDTO = guild as GuildDTO;
         this.GuildData.push(guildDTO);
       });*/
+
     }, error => console.error(error));
   }
   deleteGuild(guildId: number) {
@@ -47,20 +49,10 @@ export class GuildComponent {
       error => console.error(error)
     );
   }
-  searchGuilds() {
-    if (this.searchQuery.trim() === '') {
-      // If search query is empty, show all guilds
-      this.filteredGuilds = [...this.GuildData];
-    } else {
-      // If search query is not empty, filter guilds based on the query
-      const lowerCaseQuery = this.searchQuery.toLowerCase();
-      this.filteredGuilds = this.GuildData.filter(guild =>
-        guild.guildName.toLowerCase().includes(lowerCaseQuery)
-      );
-    }
+ 
   }
 
-}
+
 interface GuildDTO {
   memberNames: any;
   guildName: string;
@@ -71,3 +63,5 @@ interface GuildDTO {
 }
 
 export class AppModule { }
+
+

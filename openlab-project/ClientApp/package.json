@@ -13,6 +13,7 @@
     "test": "ng test",
     "generate-component": "ng g c create-guild --module=app.module.ts",
     "generate-service": "ng g s create-guild-service",
+     "generate-pipe":"ng g pipe search",
     "dowmaterial": "ng add @angular/material"
   },
   "private": true,
